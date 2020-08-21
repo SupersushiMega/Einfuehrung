@@ -6,66 +6,130 @@
 #define T3 (PINC & (1<<PC2))
 //Test
 
-
 int main(void)
 {
-	uint8_t ActiveLed;
-	uint8_t Direc;
-	uint8_t Speed;
-	uint8_t ButtonDown;
-	Speed = 1000;
-	ButtonDown = 0;
-	Direc = 0;
-	ActiveLed = 1;
+	uint8_t light;
 	DDRD = 0xFF;
 	DDRC &= (1<<PC0) | (1<<PC1) | (1<<PC2);
 	while(1)
 	{ 
-		_delay_ms(Speed * 4);
-		PORTD = ActiveLed;
-		if (Direc){
-			ActiveLed = ActiveLed / 2;
-		}
-		
-		else{
-			ActiveLed = ActiveLed * 2;
-		}
-		
-		if (ActiveLed == 128){
-			_delay_ms(Speed * 4);
-			PORTD = ActiveLed;
-			ActiveLed = 1;
-		}
-		
-		else if (ActiveLed == 0){
-			ActiveLed = 128;
-		}
-		
-		if (!ButtonDown)
+		if (T1)
 		{
-			if (!T1)
-			{
-				Speed -= 25;
-			}
-			
-			else if (!T2)
-			{
-				Direc = !Direc;
-			}
-			
-			else if (!T3)
-			{
-				Speed += 25;
-			}
-			ButtonDown = 1;
+			led(0,1);
+			ledSwitch(1,1);
 		}
-		if (T1 && T2 && T3)
+		else
 		{
-			ButtonDown = 0;
+			led(0,0);
+			ledSwitch(1,0);
 		}
 	} //end while
 }//end of main
 
+void led (uint8_t nr, uint8_t status)
+{
+	PORTD = (status<<nr);
+}
 
-
-
+void ledSwitch (uint8_t nr, uint8_t status)
+{
+	switch(nr)
+	{
+		case 0:
+		{
+			if (status == 1)
+			{
+				PORTD |= (1<<PD0);
+			}
+			else
+			{
+				PORTD &= (1<<PD0);
+			}
+			break;
+		}
+		case 1:
+		{
+			if (status)
+			{
+				PORTD |=(1<<PD1);
+			}
+			else
+			{
+				PORTD &= (1<<PD1);
+			}
+			break;
+		}
+		case 2:
+		{
+			if (status)
+			{
+				PORTD |= (1<<PD2);
+			}
+			else
+			{
+				PORTD &= (1<<PD2);
+			}
+			break;
+		}
+		case 3:
+		{
+			if (status)
+			{
+				PORTD |= (1<<PD3);
+			}
+			else
+			{
+				PORTD &= (1<<PD3);
+			}
+			break;
+		}
+		case 4:
+		{
+			if (status)
+			{
+				PORTD |= (1<<PD4);
+			}
+			else
+			{
+				PORTD &= (1<<PD4);
+			}
+			break;
+		}
+		case 5:
+		{
+			if (status)
+			{
+				PORTD |= (1<<PD5);
+			}
+			else
+			{
+				PORTD &= (1<<PD5);
+			}
+			break;
+		}
+		case 6:
+		{
+			if (status)
+			{
+				PORTD |= (1<<PD6);
+			}
+			else
+			{
+				PORTD &= (1<<PD6);
+			}
+			break;
+		}
+		case 7:
+		{
+			if (status)
+			{
+				PORTD |= (1<<PD7);
+			}
+			else
+			{
+				PORTD &= (1<<PD7);
+			}
+			break;
+		}
+	}
+}
