@@ -6,26 +6,6 @@
 #define T3 (PINC & (1<<PC2))
 //Test
 
-int main(void)
-{
-	uint8_t light;
-	DDRD = 0xFF;
-	DDRC &= (1<<PC0) | (1<<PC1) | (1<<PC2);
-	while(1)
-	{ 
-		if (T1)
-		{
-			led(0,1);
-			ledSwitch(1,1);
-		}
-		else
-		{
-			led(0,0);
-			ledSwitch(1,0);
-		}
-	} //end while
-}//end of main
-
 void led (uint8_t nr, uint8_t status)
 {
 	PORTD = (status<<nr);
@@ -133,3 +113,32 @@ void ledSwitch (uint8_t nr, uint8_t status)
 		}
 	}
 }
+
+uint8_t Taster(nr)
+{
+	return (PINC & (1<<nr));
+}
+
+int main(void)
+{
+	uint8_t light;
+	DDRD = 0xFF;
+	DDRC &= (1<<PC0) | (1<<PC1) | (1<<PC2);
+	while(1)
+	{ 
+		if (T1)
+		{
+			led(0,1);
+			ledSwitch(1,1);
+		}
+		else
+		{
+			led(0,0);
+			ledSwitch(1,0);
+		}
+	
+	led(2, Taster(0));
+	} //end while
+}//end of main
+
+
