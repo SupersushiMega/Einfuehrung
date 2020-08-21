@@ -7,30 +7,24 @@
 int main(void)
 {
 	DDRD = 0xFF;
-	int8_t cycle;
-	uint8_t test;
-	uint8_t time;
-	cycle = 1;
-	test = 0;
-	time = 1;
-	
+	DDRC &= (1<<PC0), (1<<PC1), (1<<PC2);
 	while(1)
 	{ 
-		_delay_ms(300);
-		PORTD = test;
-		if (test <= 254)
+		if (!(PINC & (1<<PC0)))
 		{
-			test = test * 2 + 1;
+			PORTD = 1;
 		}
-		
+		else if (!(PINC & (1<<PC1)))
+		{
+			PORTD = 2;
+		}
+		else if (!(PINC & (1<<PC2)))
+		{
+			PORTD = 3;
+		}
 		else
 		{
-			while(test != 0)
-			{
-				_delay_ms(300);
-				test = test / 2;
-				PORTD = test;
-			}
+			PORTD = 0;
 		}
 	} //end while
 }//end of main
