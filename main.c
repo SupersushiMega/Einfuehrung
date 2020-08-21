@@ -21,23 +21,23 @@ int main(void)
 	DDRC &= (1<<PC0) | (1<<PC1) | (1<<PC2);
 	while(1)
 	{ 
-		PORTD = ActiveLed;
 		_delay_ms(Speed * 4);
-		if (Direc)
-		{
+		PORTD = ActiveLed;
+		if (Direc){
 			ActiveLed = ActiveLed / 2;
 		}
-		else
-		{
+		
+		else{
 			ActiveLed = ActiveLed * 2;
 		}
 		
-		if (ActiveLed >= 128)
-		{
+		if (ActiveLed == 128){
+			_delay_ms(Speed * 4);
+			PORTD = ActiveLed;
 			ActiveLed = 1;
 		}
-		else if (ActiveLed == 0)
-		{
+		
+		else if (ActiveLed == 0){
 			ActiveLed = 128;
 		}
 		
