@@ -12,7 +12,6 @@ int main(void)
 	
 	DDRC = 0xFF;
 	PORTC = 0x00;
-	if(1)
 	lcd_init(LCD_DISP_ON_CURSOR);  // initialisieren
 	
 	lcd_clrscr();
