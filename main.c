@@ -1,11 +1,13 @@
 #include <avr/io.h>
+#define F_CPU 8000000UL
 #include <util/delay.h>
+#include <string.h>
 #include "lcd.h"
 //Test
 
-void Update(void);
+void Update();
 void Write (char Text[]);
-void Reset (Void);
+void Reset ();
 
 int main(void)
 {
@@ -35,23 +37,24 @@ int main(void)
 						0b00010001};//Line 8
 	_delay_ms(1000);
 
-	PORTC &= ~(1<<PC1);
-	PORTD = 0b00111000;
+	PORTC &= ~(1<<PC1); //RS
+	Reset();
+	PORTD = 0b00001111;
 	Update();
-	PORTD = 0b00000001;
+	PORTD = 0b00111000;
 	Update();
 	PORTD = 0b01000000;
 	_delay_ms(1000);
 	Update();
-	PORTC |= (1<<PC1);
+	PORTC |= (1<<PC1); //RS
 	short i;
 	for (i=0; i < sizeof(Symbol); i++) //Read Letters
 	{
 		_delay_ms(1000);
-		PORTD = Symbol[0b00001110]; //Send Letters
+		PORTD = Symbol[i]; //Send Letters
 		Update();
 	}
-	
+	PORTD = 0b01000000;
 	while(1)
 	{ 
 			
@@ -61,9 +64,9 @@ int main(void)
 void Update(void)
 {
 	_delay_ms(100);
-	PORTC &= ~(1<<PC0);
-	_delay_ms(100);
 	PORTC |= (1<<PC0);
+	_delay_ms(100);
+	PORTC &= ~(1<<PC0);
 	_delay_ms(100);
 }
 

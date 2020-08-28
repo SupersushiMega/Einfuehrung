@@ -10,10 +10,10 @@
 
 DEVICE     = atmega328p
 CLOCK      = 8000000
-PROGRAMMER = -c usbasp -P usb
+PROGRAMMER = -c USBasp -P usb
 AVRDUDE = avrdude $(PROGRAMMER) -p $(DEVICE) -v
 
-# avrdude -c usbasp -P usb -p atmega644p -U lfuse:w0xFF:m -U hfuse:w:0xD9:m -U efuse:w:0xFF:m
+ #avrdude -c usbasp -P usb -p atmega8 p -U lfuse:w0xFF:m -U hfuse:w:0xD9:m -U efuse:w:0xFF:m
 
 # Choose your favorite programmer and interface above.
 
@@ -21,8 +21,7 @@ COMPILE = avr-gcc -Wall -O0 -Iusbdrv -I. -mmcu=$(DEVICE) #-DDEBUG_LEVEL=2
 # NEVER compile the final product with debugging! Any debug output will
 # distort timing so that the specs can't be met.
 
-OBJECTS =  main.o 
-
+OBJECTS =  main.o lcd.o
 
 # symbolic targets:
 all:	main.hex
@@ -40,7 +39,7 @@ all:	main.hex
 .c.s:
 	$(COMPILE) -S $< -o $@
 
-program:	all
+flash:	all
 	$(AVRDUDE) -U flash:w:main.hex:i
 
 clean:
