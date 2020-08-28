@@ -39,7 +39,7 @@ all:	main.hex
 .c.s:
 	$(COMPILE) -S $< -o $@
 
-flash:	all
+program:	all
 	$(AVRDUDE) -U flash:w:main.hex:i
 
 clean:
