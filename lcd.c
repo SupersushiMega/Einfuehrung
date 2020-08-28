@@ -509,6 +509,13 @@ void lcd_puts_p(const char *progmem_s)
 
 }/* lcd_puts_p */
 
+void lcd_NOut(uint16_t count)
+{
+	char buffer[20];
+	utoa(count, buffer, 10);
+	lcd_puts(buffer);
+}
+
 
 /*************************************************************************
 Initialize display and select type of cursor 

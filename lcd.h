@@ -169,6 +169,7 @@
 
 #define LCD_MODE_DEFAULT     ((1<<LCD_ENTRY_MODE) | (1<<LCD_ENTRY_INC) )
 
+void lcd_NOut(uint16_t count);
 
 
 /**
