@@ -49,15 +49,36 @@ int main(void)
 	{ 
 		if(Signal == before)
 		{	
-			//~ point++;
-			//~ if ((point % 80) == 0)
-			//~ {
 				time++;
 				//~ point = 0;
-				if (time > 800)	//minutensynch
+				if ((time/2) > 80000)	//minutensynch
 				{
-					if (time == 801)
+					if (Day != 0)
 					{
+						//Display Update
+						//==============================================
+						lcd_clrscr();
+						if (Hour < 10) //Checking if Hour below ten to add a zero in front of the Number
+						{
+							lcd_NOut(0);
+						}
+						lcd_NOut(Hour);
+						lcd_puts(":");
+						if (Min < 10)	//Checking if Min below ten to add a zero in front of the Number
+						{
+							lcd_NOut(0);
+						}
+						lcd_NOut(Min);
+						lcd_puts("\n");
+						lcd_NOut(Day);
+						lcd_puts(".");
+						lcd_NOut(Month);
+						lcd_puts(".");
+						lcd_NOut(Year);
+						lcd_puts("   WD");
+						lcd_NOut(WeekDay);
+						//==============================================
+				
 						//Variable reset
 						//==============================================
 						Min = 0;
@@ -68,16 +89,15 @@ int main(void)
 						Year = 0;
 						//==============================================
 					}
-					second = 0;
+					second = -1;
 				}
-			//~ }
 		}
 		else
 		{
 			before = Signal;
 			if(Signal == 0)	//neg flanke
 			{
-				if (!(time <= 440))//high detection
+				if (!((time/2) <= 10000))//high detection
 				{			
 					//Decoding
 					//==================================================
@@ -177,46 +197,13 @@ int main(void)
 				//~ lcd_NOut(WeekDay);
 				//~ lcd_puts("\n");
 				//~ lcd_NOut(second);
-				uint16_t tmp = time / 2;
-				lcd_clrscr();
-				lcd_NOut(tmp);
+				//~ lcd_puts("  ");
+				//~ uint16_t tmp = time / 2;
+				//~ lcd_NOut(tmp);
 				time = 0;
 			}
 			else//pos flank
 			{
-					//~ lcd_clrscr();
-					//~ lcd_NOut(time);
-					//~ lcd_puts("\n");
-					//~ lcd_NOut(second);
-				//Display Update
-				//==============================================
-				//~ lcd_clrscr();
-				//~ if (Hour < 10) //Checking if Hour below ten to add a zero in front of the Number
-				//~ {
-					//~ lcd_NOut(0);
-				//~ }
-				//~ lcd_NOut(Hour);
-				//~ lcd_puts(":");
-				//~ if (Min < 10)	//Checking if Min below ten to add a zero in front of the Number
-				//~ {
-					//~ lcd_NOut(0);
-				//~ }
-				//~ lcd_NOut(Min);
-				//~ lcd_puts(":");
-				//~ if (second < 10)	//Checking if second below ten to add a zero in front of the Number
-				//~ {
-					//~ lcd_NOut(0);
-				//~ }
-				//~ lcd_NOut(second);
-				//~ lcd_puts("\n");
-				//~ lcd_NOut(Day);
-				//~ lcd_puts(".");
-				//~ lcd_NOut(Month);
-				//~ lcd_puts(".");
-				//~ lcd_NOut(Year);
-				//~ lcd_puts("   WD");
-				//~ lcd_NOut(WeekDay);
-				//==============================================
 				time = 0;
 				second++;
 			}
